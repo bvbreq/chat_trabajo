@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Spinner spinnerBackgroundImages = dialogLayout.findViewById(R.id.spinnerBackgroundImages);
                 // Configurar Spinner con las opciones de imágenes de fondo
-                String[] nombresImagenes = {"Fondo Default", "Fondo Agua y Luz", "Fondo Árboles", "Fondo Atardecer", "Fondo Nubes Lilas", "Fondo Neón"};
+                String[] nombresImagenes = {"Fondo Default", "Fondo Agua", "Fondo Árboles", "Fondo Atardecer", "Fondo Nubes", "Fondo Noche", "Fondo Burbujas"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, nombresImagenes);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerBackgroundImages.setAdapter(adapter);
@@ -312,11 +312,12 @@ public class MainActivity extends AppCompatActivity {
         // Mapa que relaciona los nombres de las imágenes con sus IDs en /res/drawable
         HashMap<String, Integer> mapaImagenes = new HashMap<>();
         mapaImagenes.put("Fondo Default", R.drawable.fondo_default);
-        mapaImagenes.put("Fondo Agua y Luz", R.drawable.fondo_agua_luz);
+        mapaImagenes.put("Fondo Agua", R.drawable.fondo_agua);
         mapaImagenes.put("Fondo Árboles", R.drawable.fondo_arboles);
         mapaImagenes.put("Fondo Atardecer", R.drawable.fondo_atardecer);
-        mapaImagenes.put("Fondo Nubes Lilas", R.drawable.fondo_nubes_lilas);
-        mapaImagenes.put("Fondo Neón", R.drawable.fondo_neon);
+        mapaImagenes.put("Fondo Nubes", R.drawable.fondo_nubes);
+        mapaImagenes.put("Fondo Noche", R.drawable.fondo_noche);
+        mapaImagenes.put("Fondo Burbujas", R.drawable.fondo_burbujas);
 
         // Verificar si el nombre de la imagen existe en el mapa
         if (mapaImagenes.containsKey(nombreImagen)) {

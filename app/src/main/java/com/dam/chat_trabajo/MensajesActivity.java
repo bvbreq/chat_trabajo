@@ -158,11 +158,11 @@ public class MensajesActivity extends AppCompatActivity {
                         callback.onImagenFondoObtenida(idDrawable);
                     } else {
                         Log.d("obtenerImagenDeFondo", "ID de imagen es nulo para la sala con ID: " + idSala);
-                        callback.onImagenFondoObtenida(R.drawable.fondo_atardecer); // Usar imagen por defecto si no se encuentra el ID
+                        callback.onImagenFondoObtenida(R.drawable.fondo_default); // Usar imagen por defecto si no se encuentra el ID
                     }
                 } else {
                     Log.d("obtenerImagenDeFondo", "No se encontró documento para la sala con ID: " + idSala);
-                    callback.onImagenFondoObtenida(R.drawable.fondo_arboles); // Usar imagen por defecto si el documento no existe
+                    callback.onImagenFondoObtenida(R.drawable.fondo_default); // Usar imagen por defecto si el documento no existe
                 }
             } else {
                 Log.d("obtenerImagenDeFondo", "Error al obtener documento de la sala con ID: " + idSala, task.getException());

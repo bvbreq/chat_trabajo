@@ -5,5 +5,8 @@
     <item name="android:textColor">#FFFFFF</item> <!-- Color del texto -->
     <item name="android:textSize">16sp</item> <!-- Tamaño del texto -->
 </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Estilo sin barra de acción -->
+    </style>
 
 </resources>

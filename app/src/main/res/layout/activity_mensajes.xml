@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/layoutMensaje"
-        android:background="@android:color/transparent" />
-        android:layout_above="@id/layoutMensaje"
+        android:background="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="3dp"
         android:paddingLeft="5dp"
@@ -32,8 +31,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/white">
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
         android:elevation="8dp">

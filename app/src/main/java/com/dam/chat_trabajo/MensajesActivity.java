@@ -190,17 +190,10 @@ public class MensajesActivity extends AppCompatActivity implements MensajeAdapte
             auth = FirebaseAuth.getInstance();
             usuario = auth.getCurrentUser();
 
-            List<Mensaje> mensajes = new ArrayList<>();
-            String nombreUsuario = obtenerNombreUsuario(usuario.getEmail());
             adapter = new MensajeAdapter(this, R.layout.item_mensaje, mensajes, nombreUsuario);
             listView.setAdapter(adapter);
 
-            buttonEnviar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    enviarMensaje(nombreSala, idSala, participantesSala);
-                }
-            });
+
         buttonEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

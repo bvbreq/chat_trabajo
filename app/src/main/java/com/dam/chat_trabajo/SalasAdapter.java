@@ -49,7 +49,7 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
 
         TextView tvNombreSala = convertView.findViewById(R.id.btnSala); //No es un boton es un textview se quedo el id de boton
         TextView tvParticipantes = convertView.findViewById(R.id.tvParticipantes);
-        TextView tvIdSala = convertView.findViewById(R.id.tvIdSala);
+        //TextView tvIdSala = convertView.findViewById(R.id.tvIdSala);
         Button btnEliminarSala = convertView.findViewById(R.id.btnEliminarSala); // Botón para eliminar sala
 
         tvNombreSala.setText(sala.getNombre());
@@ -64,7 +64,7 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
         }
         String participantesString = TextUtils.join(", ", participantes);
         tvParticipantes.setText("Participantes: " + participantesString);
-        tvIdSala.setText("ID de la Sala: " + sala.getId());
+        //tvIdSala.setText("ID de la Sala: " + sala.getId());
 
         // Mostrar el botón de eliminar sala si el usuario actual es el administrador
         // Mostrar el botón de eliminar sala si el usuario actual es el administrador

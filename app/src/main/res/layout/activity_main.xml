@@ -3,27 +3,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
+    <!-- Encabezado con texto "Salas disponibles" centrado y botón de configuración a la izquierda -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cerrar_sesion" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
+        <!-- Botón de configuración -->
 
-    <Button
-        android:id="@+id/crearSala"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crear Sala"
-        android:layout_marginTop="16dp" />
+        <!-- Texto "Salas disponibles" centrado -->
+
+        <ImageButton
+            android:id="@+id/btconfiguracion"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:contentDescription="Configuración"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_configuracion" />
+
+        <TextView
+            android:id="@+id/tituloLobby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Salas disponibles"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:theme="@style/FirebaseUI.PrivacyFooter" />
+    </LinearLayout>
+
+    <!-- ListView para mostrar las salas -->
     <ListView
         android:id="@+id/listViewSalas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
 
+    <!-- Barra de botones alineada al centro vertical -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp">
+
+        <!-- Botón de cerrar sesión -->
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cerrar_sesion"
+            android:background="@color/azul"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:textAllCaps="false" />
+
+        <!-- Espacio entre botones (175dp) -->
+        <Space
+            android:layout_width="175dp"
+            android:layout_height="wrap_content" />
+
+        <!-- Botón para crear sala -->
+        <Button
+            android:id="@+id/crearSala"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/anadir_nueva_sala"
+            android:background="@color/azul"
+            android:layout_gravity="end"
+            android:textAllCaps="false" />
+    </LinearLayout>
 </LinearLayout>

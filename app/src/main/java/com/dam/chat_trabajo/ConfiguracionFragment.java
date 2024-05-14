@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +21,9 @@ public class ConfiguracionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private EditText editTextNewUsername;
+    private Button buttonSave;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,6 +64,25 @@ public class ConfiguracionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_configuracion, container, false);
+        // Inflar el diseño del fragmento
+        View view = inflater.inflate(R.layout.fragment_change_username, container, false);
+
+        // Obtener referencias a las vistas del fragmento
+        editTextNewUsername = view.findViewById(R.id.editTextNewUsername);
+        buttonSave = view.findViewById(R.id.buttonSave);
+
+        // Configurar el clic del botón para guardar el nuevo nombre de usuario
+        buttonSave.setOnClickListener(v -> saveNewUsername());
+
+        return view;    }
+
+    private void saveNewUsername() {
+        String newUsername = editTextNewUsername.getText().toString().trim();
+
+        // Aquí debes implementar la lógica para guardar el nuevo nombre de usuario
+        // Por ejemplo, actualiza el nombre de usuario en Firestore o en la autenticación de Firebase
+
+        // Cierra el fragmento después de guardar exitosamente
+        requireActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 }

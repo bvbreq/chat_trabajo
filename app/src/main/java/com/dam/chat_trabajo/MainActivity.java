@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -20,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -116,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button botonCerrarSesion = findViewById(R.id.logout);
         Button botonCrearSala = findViewById(R.id.crearSala);
+        ImageButton buttonChangeUsername = findViewById(R.id.btconfiguracion);
+        buttonChangeUsername.setOnClickListener(v -> showChangeUsernameFragment());
         //Button botonEliminarSala = findViewById(R.id.boEliminarSala);
 
         botonCerrarSesion.setOnClickListener(new View.OnClickListener() {
@@ -465,6 +470,18 @@ public class MainActivity extends AppCompatActivity {
     }
     interface OnUsuariosObtenidosListener {
         void onUsuariosObtenidos(List<String> nombresUsuarios);
+    }
+    private void showChangeUsernameFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Crea una instancia del fragmento de cambio de nombre de usuario
+        ConfiguracionFragment changeUsernameFragment = new ConfiguracionFragment();
+
+        // Reemplaza el contenido actual con el fragmento de cambio de nombre de usuario
+        fragmentTransaction.replace(R.id.fragment_container, changeUsernameFragment);
+        fragmentTransaction.addToBackStack(null);  // Opcional: añade a la pila de retroceso
+        fragmentTransaction.commit();
     }
     }
 

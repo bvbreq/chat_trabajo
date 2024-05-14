@@ -4,5 +4,6 @@
     <color name="blanco">#FFFFFFFF</color>
     <color name="celeste">#D0F4F5</color>
     <color name="gris">#EEEEEE</color>
+    <color name="azul">#0077FF</color>
 
 </resources>

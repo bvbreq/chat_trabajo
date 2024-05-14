@@ -43,6 +43,8 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_sala, parent, false);
+            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.celeste));
+
         }
 
         Sala sala = getItem(position);

@@ -99,6 +99,16 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
 
         return convertView;
     }
+    public void actualizarSalas(List<Sala> nuevasSalas) {
+        // Limpiar la lista actual de salas
+        salas.clear();
+
+        // Agregar las nuevas salas a la lista
+        salas.addAll(nuevasSalas);
+
+        // Notificar al adaptador que los datos han cambiado
+        notifyDataSetChanged();
+    }
     private void eliminarSala(String idSala) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference salaRef = db.collection("chat")

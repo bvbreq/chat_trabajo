@@ -19,7 +19,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
 
     public UsuariosAdapter(List<String> usuarios) {
         this.usuarios = usuarios;
-        usuariosSeleccionados = new ArrayList<>();
+        this.usuariosSeleccionados = new ArrayList<>();
     }
 
     @NonNull
@@ -32,7 +32,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     @Override
     public void onBindViewHolder(@NonNull UsuarioViewHolder holder, int position) {
         String usuario = usuarios.get(position);
-        holder.bindUsuario(usuario);
+        holder.bindUsuario(usuario, usuariosSeleccionados);
     }
 
     @Override
@@ -44,6 +44,15 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
         return usuariosSeleccionados;
     }
 
+    // Método para actualizar la lista de usuarios seleccionados
+    public void actualizarUsuariosFiltrados(List<String> nuevosUsuariosSeleccionados) {
+        usuariosSeleccionados.clear();
+        if (nuevosUsuariosSeleccionados != null) {
+            usuariosSeleccionados.addAll(nuevosUsuariosSeleccionados);
+        }
+        notifyDataSetChanged(); // Notificar al RecyclerView de que los datos han cambiado
+    }
+
     public class UsuarioViewHolder extends RecyclerView.ViewHolder {
 
         private CheckBox checkBoxUsuario;
@@ -53,8 +62,9 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
             checkBoxUsuario = itemView.findViewById(R.id.checkBoxUsuario);
         }
 
-        public void bindUsuario(String usuario) {
+        public void bindUsuario(String usuario, List<String> usuariosSeleccionados) {
             checkBoxUsuario.setText(usuario);
+            checkBoxUsuario.setChecked(usuariosSeleccionados.contains(usuario));
             checkBoxUsuario.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

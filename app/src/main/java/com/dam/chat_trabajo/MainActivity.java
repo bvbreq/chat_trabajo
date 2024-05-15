@@ -1,7 +1,5 @@
 package com.dam.chat_trabajo;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,36 +9,27 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,11 +42,15 @@ public class MainActivity extends AppCompatActivity {
     private SalasAdapter salasAdapter;
     private List<Sala> salasList;
     private ListView listViewSalas;
+    private boolean fragmentVisible = false;
+    private FiltrarFragment filtrarFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragmentVisible = false;
         // Ocultar el título de la barra de acción
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -88,6 +81,36 @@ public class MainActivity extends AppCompatActivity {
             // Configurar la ListView
             listViewSalas = findViewById(R.id.listViewSalas);
             listViewSalas.setAdapter(salasAdapter);
+            //mostrarSalas();
+
+            // Inicializar el fragmento
+            filtrarFragment = new FiltrarFragment();
+
+            if (savedInstanceState != null) {
+                // Restaurar el estado de visibilidad del fragmento desde savedInstanceState
+                fragmentVisible = savedInstanceState.getBoolean("fragmentVisible", false);
+            }
+
+            // Configurar el botón "Filtrar Salas"
+            Button btnFiltrarSalas = findViewById(R.id.filtrarSalas);
+            btnFiltrarSalas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggleFragmentVisibility();
+                }
+            });
+
+            // Mostrar u ocultar el fragmento según el estado actual
+            if (fragmentVisible) {
+                mostrarFragment();
+            } else {
+                ocultarFragment();
+            }
+        }
+
+
+
+        // Implementa esta función según tu lógica
 
             // Configurar el OnItemClickListener
             listViewSalas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,12 +138,10 @@ public class MainActivity extends AppCompatActivity {
             // Obtener y mostrar las salas existentes
             mostrarSalas();
             suscribirListenerSalas();
-        }
+
 
         Button botonCerrarSesion = findViewById(R.id.logout);
         Button botonCrearSala = findViewById(R.id.crearSala);
-        ImageButton buttonChangeUsername = findViewById(R.id.btconfiguracion);
-        buttonChangeUsername.setOnClickListener(v -> showChangeUsernameFragment());
         //Button botonEliminarSala = findViewById(R.id.boEliminarSala);
 
         botonCerrarSesion.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +163,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Guardar el estado de visibilidad del fragmento en outState
+        outState.putBoolean("fragmentVisible", fragmentVisible);
+    }
+
+    private void toggleFragmentVisibility() {
+        if (fragmentVisible) {
+            ocultarFragment();
+        } else {
+            mostrarFragment();
+        }
+    }
+
+    private void mostrarFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(android.R.id.content, filtrarFragment)
+                .addToBackStack(null)
+                .commit();
+        fragmentVisible = true;
+    }
+
+    private void ocultarFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .remove(filtrarFragment)
+                .commit();
+        fragmentVisible = false;
     }
     private void mostrarSalas() {
         db.collection("chat").document("salas_aux").collection("salas").get()
@@ -471,18 +521,7 @@ public class MainActivity extends AppCompatActivity {
     interface OnUsuariosObtenidosListener {
         void onUsuariosObtenidos(List<String> nombresUsuarios);
     }
-    private void showChangeUsernameFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // Crea una instancia del fragmento de cambio de nombre de usuario
-        ConfiguracionFragment changeUsernameFragment = new ConfiguracionFragment();
-
-        // Reemplaza el contenido actual con el fragmento de cambio de nombre de usuario
-        fragmentTransaction.replace(R.id.fragment_container, changeUsernameFragment);
-        fragmentTransaction.addToBackStack(null);  // Opcional: añade a la pila de retroceso
-        fragmentTransaction.commit();
-    }
     }
 
 

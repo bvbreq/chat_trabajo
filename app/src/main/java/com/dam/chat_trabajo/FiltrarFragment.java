@@ -68,7 +68,7 @@ import java.util.Set;
                         usuariosSeleccionados.addAll(usuariosMarcados);
 
                         // Lógica para mostrar salas filtradas al presionar el botón "Listo"
-                mostrarSalasFiltradas();
+                        obtenerSalasFiltradas(usuariosSeleccionados, )
 
                 // Remover el fragmento actual
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -120,7 +120,8 @@ import java.util.Set;
                     });
         }
 
-        private void mostrarSalasFiltradas() {
+        protected List<String> mostrarSalasFiltradas() {
+            List<String>
             obtenerSalasFiltradas(usuariosSeleccionados, salasFiltradas -> {
                 if (usuariosAdapter != null) {
                     // Actualizar el adaptador con las salas filtradas o con los usuarios seleccionados
@@ -128,10 +129,12 @@ import java.util.Set;
                     // Aquí puedes implementar la lógica para mostrar las salas filtradas
                 }
             });
+            return
         }
 
 
-        protected void obtenerSalasFiltradas(List<String> usuariosSeleccionados, OnSuccessListener<List<Sala>> onSuccessListener) {
+        protected List <Sala> obtenerSalasFiltradas(List<String> usuariosSeleccionados, OnSuccessListener<List<Sala>> onSuccessListener) {
+            //List<String> SalasObtenidas = null;
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("chat")
                     .document("salas_aux")
@@ -182,6 +185,7 @@ import java.util.Set;
                         Log.e("FiltrarFragment", "Error al obtener lista de salas: " + e.getMessage());
                         onSuccessListener.onSuccess(new ArrayList<>()); // En caso de error, devolver lista vacía
                     });
+            return salasFiltradas;
         }
 
 

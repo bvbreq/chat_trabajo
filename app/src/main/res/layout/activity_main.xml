@@ -34,6 +34,14 @@
         android:layout_weight="1"
         android:layout_marginTop="16dp" />
 
+    <ListView
+        android:id="@+id/listViewSalasFiltradas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
     <!-- FrameLayout para el fragment_container (superpuesto sobre el ListView) -->
     <FrameLayout
         android:id="@+id/container"

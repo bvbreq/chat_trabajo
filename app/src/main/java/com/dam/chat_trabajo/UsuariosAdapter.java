@@ -17,6 +17,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
     private List<String> usuarios;
     private List<String> usuariosSeleccionados;
 
+
     public UsuariosAdapter(List<String> usuarios) {
         this.usuarios = usuarios;
         this.usuariosSeleccionados = new ArrayList<>();
@@ -34,15 +35,15 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
         String usuario = usuarios.get(position);
         holder.bindUsuario(usuario, usuariosSeleccionados);
     }
+    public List<String> getUsuariosSeleccionados() {
+        return usuariosSeleccionados;
+    }
 
     @Override
     public int getItemCount() {
         return usuarios.size();
     }
 
-    public List<String> getUsuariosSeleccionados() {
-        return usuariosSeleccionados;
-    }
 
     // Método para actualizar la lista de usuarios seleccionados
     public void actualizarUsuariosFiltrados(List<String> nuevosUsuariosSeleccionados) {
@@ -52,6 +53,7 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
         }
         notifyDataSetChanged(); // Notificar al RecyclerView de que los datos han cambiado
     }
+
 
     public class UsuarioViewHolder extends RecyclerView.ViewHolder {
 
@@ -76,5 +78,6 @@ public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.Usuari
                 }
             });
         }
+
     }
 }

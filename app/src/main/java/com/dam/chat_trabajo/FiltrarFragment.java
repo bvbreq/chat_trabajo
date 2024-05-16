@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,6 +34,8 @@ import java.util.Set;
         private RecyclerView recyclerViewUsuarios;
         private UsuariosAdapter usuariosAdapter;
         private List<String> usuariosSeleccionados = new ArrayList<>();
+        protected List<Sala> salasFiltradas = new ArrayList<>();
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,11 +47,27 @@ import java.util.Set;
             obtenerNombresUsuarios(usuarios -> {
                 usuariosAdapter = new UsuariosAdapter(usuarios);
                 recyclerViewUsuarios.setAdapter(usuariosAdapter);
-            });
+
+
+            //List<String> usuariosMarcados = usuariosAdapter.getUsuariosSeleccionados();
+
+            // Asignar la lista de usuarios marcados a usuariosSeleccionados en el fragmento
+           // usuariosSeleccionados.clear();
+            //usuariosSeleccionados.addAll(usuariosMarcados);
            // usuariosSeleccionados =
             Button botonListo = view.findViewById(R.id.buttonListo);
             botonListo.setOnClickListener(v -> {
-                // Lógica para mostrar salas filtradas al presionar el botón "Listo"
+                if (usuariosAdapter != null) {
+                    // Obtener la lista de usuarios marcados del adaptador
+                    List<String> usuariosMarcados = usuariosAdapter.getUsuariosSeleccionados();
+
+                    // Verificar si la lista de usuarios marcados no es nula
+                    if (usuariosMarcados != null) {
+                        // Limpiar y actualizar la lista de usuarios seleccionados en el fragmento con los usuarios marcados
+                        usuariosSeleccionados.clear();
+                        usuariosSeleccionados.addAll(usuariosMarcados);
+
+                        // Lógica para mostrar salas filtradas al presionar el botón "Listo"
                 mostrarSalasFiltradas();
 
                 // Remover el fragmento actual
@@ -61,7 +81,16 @@ import java.util.Set;
                 newTransaction.add(R.id.container, nuevoFragmento); // Agrega el nuevo fragmento
                 newTransaction.addToBackStack(null); // Agrega la transacción al BackStack
                 newTransaction.commit(); // Realiza la transacción
+                    } else {
+                        Toast.makeText(requireContext(), "Error: Lista de usuarios marcados es nula", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Error: Adaptador no inicializado correctamente", Toast.LENGTH_SHORT).show();
+
+                }
             });
+        });
 
             return view; // Devuelve la vista inflada
         }
@@ -94,8 +123,9 @@ import java.util.Set;
         private void mostrarSalasFiltradas() {
             obtenerSalasFiltradas(usuariosSeleccionados, salasFiltradas -> {
                 if (usuariosAdapter != null) {
-                    // Actualizar el adaptador con las salas filtradas
+                    // Actualizar el adaptador con las salas filtradas o con los usuarios seleccionados
                     usuariosAdapter.actualizarUsuariosFiltrados(usuariosSeleccionados);
+                    // Aquí puedes implementar la lógica para mostrar las salas filtradas
                 }
             });
         }
@@ -108,8 +138,10 @@ import java.util.Set;
                     .collection("salas")
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                        List<Sala> salasFiltradas = new ArrayList<>();
                         Set<String> salasUnicas = new HashSet<>();
+                        List<Sala> salasFiltradas = new ArrayList<>();
+
+                        Log.d("FiltrarFragment", "Número de documentos obtenidos: " + queryDocumentSnapshots.size());
 
                         for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                             String idSala = document.getId();
@@ -142,11 +174,15 @@ import java.util.Set;
                             }
                         }
 
-                        onSuccessListener.onSuccess(salasFiltradas);
+                        Log.d("FiltrarFragment", "Número de salas filtradas: " + salasFiltradas.size());
+                        onSuccessListener.onSuccess(salasFiltradas); // Devolver la lista de salas filtradas
+
                     })
                     .addOnFailureListener(e -> {
                         Log.e("FiltrarFragment", "Error al obtener lista de salas: " + e.getMessage());
                         onSuccessListener.onSuccess(new ArrayList<>()); // En caso de error, devolver lista vacía
                     });
         }
+
+
     }

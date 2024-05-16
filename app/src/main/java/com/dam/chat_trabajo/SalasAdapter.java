@@ -4,6 +4,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,33 +47,41 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_sala, parent, false);
-            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.celeste));
-
         }
 
         Sala sala = getItem(position);
 
-        TextView tvNombreSala = convertView.findViewById(R.id.btnSala); //No es un boton es un textview se quedo el id de boton
+        TextView tvNombreSala = convertView.findViewById(R.id.btnSala);
         TextView tvParticipantes = convertView.findViewById(R.id.tvParticipantes);
-        //TextView tvIdSala = convertView.findViewById(R.id.tvIdSala);
-        Button btnEliminarSala = convertView.findViewById(R.id.btnEliminarSala); // Botón para eliminar sala
+        Button btnEliminarSala = convertView.findViewById(R.id.btnEliminarSala);
+        View colorView = convertView.findViewById(R.id.colorView); // Obtener el View para el color de fondo
 
         tvNombreSala.setText(sala.getNombre());
 
-        // Reemplazar el nombre real del usuario por "tu" si coincide con el nombre de usuario actual
+        // Reemplazar el nombre real del usuario por "Tú" si coincide con el nombre de usuario actual
         List<String> participantes = sala.getParticipantes();
         for (int i = 0; i < participantes.size(); i++) {
             if (participantes.get(i).equals(nombreUsuario)) {
                 participantes.set(i, "Tú");
-
             }
         }
         String participantesString = TextUtils.join(", ", participantes);
         tvParticipantes.setText("Participantes: " + participantesString);
-        //tvIdSala.setText("ID de la Sala: " + sala.getId());
 
-        // Mostrar el botón de eliminar sala si el usuario actual es el administrador
-        // Mostrar el botón de eliminar sala si el usuario actual es el administrador
+        // Establecer el color de fondo dinámicamente
+        Drawable drawable = ContextCompat.getDrawable(context, sala.getImagen());
+
+        // Establecer la imagen como fondo de la vista colorView
+        if (drawable != null) {
+            colorView.setBackground(drawable);
+        } else {
+            // Si la imagen es nula, establece el color de fondo predeterminado
+            int defaultColor = ContextCompat.getColor(context, R.color.celeste);
+            colorView.setBackgroundColor(defaultColor);
+        }
+
+
+        // Mostrar u ocultar el botón de eliminar sala según el administrador
         if (sala != null && sala.getAdmin() != null && sala.getAdmin().equals(nombreUsuario)) {
             btnEliminarSala.setVisibility(View.VISIBLE);
             btnEliminarSala.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +94,7 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
             btnEliminarSala.setVisibility(View.GONE);
         }
 
-        //Gestiona los Clicks en los items de cada sala y le pasa los parametros a MensajesActivity
+        // Gestiona los clics en los elementos de cada sala
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,15 +102,15 @@ public class SalasAdapter extends ArrayAdapter<Sala> {
                 intent.putExtra("nombreSala", sala.getNombre());
                 intent.putExtra("idSala", sala.getId());
                 intent.putStringArrayListExtra("participantesSala", new ArrayList<>(sala.getParticipantes()));
-                intent.putExtra("admin", sala.getAdmin()); // Agregar el administrador como extra
-                intent.putExtra("imagen", sala.getImagen()); // Agregar la imagen como extra
+                intent.putExtra("admin", sala.getAdmin());
+                intent.putExtra("imagen", sala.getImagen());
                 getContext().startActivity(intent);
             }
-
         });
 
         return convertView;
     }
+
     private void eliminarSala(String idSala) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference salaRef = db.collection("chat")

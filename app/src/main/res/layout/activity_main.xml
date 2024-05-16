@@ -14,13 +14,23 @@
         android:orientation="horizontal"
         android:gravity="center_vertical|center_horizontal">
 
+
         <!-- Texto "Salas disponibles" centrado -->
+
+        <ImageView
+            android:id="@+id/imageViewDescargas"
+            android:layout_width="101dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="-70dp"
+            android:src="@drawable/descarga"></ImageView>
+
         <TextView
             android:id="@+id/tituloLobby"
-            android:layout_width="match_parent"
+            android:layout_width="216dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Salas disponibles"
+            android:text="¡Métete en una sala!\nSi no las ves, ¡crea una!"
             android:textSize="20sp"
             android:textStyle="bold"
             android:theme="@style/FirebaseUI.PrivacyFooter" />
@@ -48,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/cerrar_sesion"
-            android:background="@color/azul"
+            android:background="@color/silver"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:textAllCaps="false" />
@@ -64,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/anadir_nueva_sala"
-            android:background="@color/azul"
+            android:background="@color/celeste"
             android:layout_weight="1"
             android:layout_gravity="end"
             android:textAllCaps="false" />

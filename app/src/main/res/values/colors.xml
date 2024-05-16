@@ -2,8 +2,9 @@
 <resources>
     <color name="negro">#FF000000</color>
     <color name="blanco">#FFFFFFFF</color>
-    <color name="celeste">#D0F4F5</color>
+    <color name="celeste">#A9E3E4</color>
     <color name="gris">#EEEEEE</color>
     <color name="azul">#0077FF</color>
-
+    <color name="soft_yellow">#FFF9C4</color>
+    <color name="silver">#C0C0C0</color>
 </resources>

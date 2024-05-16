@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     android:padding="16dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="@color/soft_yellow">
+
 
     <!-- Contenedor principal del contenido -->
     <LinearLayout
@@ -39,9 +41,10 @@
         <!-- Parte derecha para el color de fondo -->
         <View
             android:id="@+id/colorView"
-            android:layout_width="16dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:background="@color/celeste" /> <!-- Cambia @color/celeste por tu color deseado -->
+            android:background="@color/celeste"
+            android:layout_marginLeft="10dp"/> <!-- Cambia @color/celeste por tu color deseado -->
         <!-- Botón para eliminar sala -->
         <Button
             android:id="@+id/btnEliminarSala"
@@ -49,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="Eliminar"
             android:layout_gravity="bottom|start"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginStart="8dp"
             android:textColor="#FFFFFF"
             android:backgroundTint="#FF0000" />
